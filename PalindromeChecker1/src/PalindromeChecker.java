@@ -1,21 +1,58 @@
 import java.util.Scanner;
 import java.util.Stack;
-import java.util.Deque;
-import java.util.LinkedList;
 
 /**
- * Strategy Interface
+ * ============================================================
+ * MAIN CLASS - UseCase13PalindromeCheckerApp
+ * ============================================================
+ *
+ * Use Case 13: Performance Comparison
+ *
+ * Goal:
+ * Compare the performance of different palindrome algorithms.
+ *
+ * Flow:
+ * 1. Accept a string input from the user
+ * 2. Run multiple palindrome algorithms
+ * 3. Capture execution time using System.nanoTime()
+ * 4. Display the results
+ *
+ * Key Concepts Used:
+ * - System.nanoTime()
+ * - Algorithm comparison
+ *
+ * @author Hemanth
+ * @version 1.0
  */
-interface PalindromeStrategy {
-    boolean check(String word);
-}
 
-/**
- * Stack Strategy Implementation
- */
-class StackStrategy implements PalindromeStrategy {
+public class PalindromeChecker {
 
-    public boolean check(String word) {
+    // Method 1: Reverse String Method
+    public static boolean reverseMethod(String word) {
+        String reversed = "";
+        for (int i = word.length() - 1; i >= 0; i--) {
+            reversed += word.charAt(i);
+        }
+        return word.equals(reversed);
+    }
+
+    // Method 2: Two Pointer Method
+    public static boolean twoPointerMethod(String word) {
+        int start = 0;
+        int end = word.length() - 1;
+
+        while (start < end) {
+            if (word.charAt(start) != word.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    // Method 3: Stack Method
+    public static boolean stackMethod(String word) {
         Stack<Character> stack = new Stack<>();
 
         for (int i = 0; i < word.length(); i++) {
@@ -27,84 +64,14 @@ class StackStrategy implements PalindromeStrategy {
                 return false;
             }
         }
-
         return true;
     }
-}
-
-/**
- * Deque Strategy Implementation
- */
-class DequeStrategy implements PalindromeStrategy {
-
-    public boolean check(String word) {
-
-        Deque<Character> deque = new LinkedList<>();
-
-        for (int i = 0; i < word.length(); i++) {
-            deque.addLast(word.charAt(i));
-        }
-
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-}
-
-/**
- * Context Class
- */
-class PalindromeService {
-
-    private PalindromeStrategy strategy;
-
-    public void setStrategy(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public boolean checkPalindrome(String word) {
-        return strategy.check(word);
-    }
-}
-
-public class PalindromeChecker {
 
     public static void main(String[] args) {
 
-        /**
-         * ============================================================
-         * MAIN CLASS - UseCase12PalindromeCheckerApp
-         * ============================================================
-         *
-         * Use Case 12: Strategy Pattern for Palindrome Algorithms
-         *
-         * Goal:
-         * Dynamically choose a palindrome algorithm.
-         *
-         * Flow:
-         * 1. Define PalindromeStrategy interface
-         * 2. Implement StackStrategy and DequeStrategy
-         * 3. Inject strategy at runtime
-         * 4. Execute palindrome check
-         *
-         * Key Concepts Used:
-         * - Interface
-         * - Polymorphism
-         * - Strategy Pattern
-         *
-         * Data Structure: Varies per strategy
-         *
-         * @author Hemanth
-         * @version 1.0
-         */
-
         System.out.println("======================================");
         System.out.println("Welcome to Palindrome Checker System");
-        System.out.println("Use Case 12: Strategy Pattern Method");
+        System.out.println("Use Case 13: Performance Comparison");
         System.out.println("======================================");
 
         Scanner scanner = new Scanner(System.in);
@@ -112,27 +79,25 @@ public class PalindromeChecker {
         System.out.print("Enter a word: ");
         String word = scanner.nextLine();
 
-        System.out.println("Choose Algorithm:");
-        System.out.println("1. Stack Strategy");
-        System.out.println("2. Deque Strategy");
+        // Reverse Method
+        long start1 = System.nanoTime();
+        boolean result1 = reverseMethod(word);
+        long end1 = System.nanoTime();
 
-        int choice = scanner.nextInt();
+        // Two Pointer Method
+        long start2 = System.nanoTime();
+        boolean result2 = twoPointerMethod(word);
+        long end2 = System.nanoTime();
 
-        PalindromeService service = new PalindromeService();
+        // Stack Method
+        long start3 = System.nanoTime();
+        boolean result3 = stackMethod(word);
+        long end3 = System.nanoTime();
 
-        if (choice == 1) {
-            service.setStrategy(new StackStrategy());
-        } else {
-            service.setStrategy(new DequeStrategy());
-        }
-
-        boolean result = service.checkPalindrome(word);
-
-        if (result) {
-            System.out.println(word + " is a Palindrome.");
-        } else {
-            System.out.println(word + " is not a Palindrome.");
-        }
+        System.out.println("\nResults:");
+        System.out.println("Reverse Method: " + result1 + " | Time: " + (end1 - start1) + " ns");
+        System.out.println("Two Pointer Method: " + result2 + " | Time: " + (end2 - start2) + " ns");
+        System.out.println("Stack Method: " + result3 + " | Time: " + (end3 - start3) + " ns");
 
         scanner.close();
     }
