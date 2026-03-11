@@ -3,37 +3,35 @@ public class PalindromeChecker {
     public static  void main(String[]args){
 /**
  * ============================================================
- * MAIN CLASS - UseCase3PalindromeCheckerApp
+ * MAIN CLASS - UseCase4PalindromeCheckerApp
  * ============================================================
  *
- * Use Case 3: Palindrome Check Using String Reverse
+ * Use Case 4: Character Array Based Palindrome Check
  *
  * Goal:
- * Check whether a string is a palindrome by reversing it.
+ * Convert a string to a character array and check if it is a palindrome.
  *
  * Flow:
  * 1. Accept a string input from the user
- * 2. Reverse the string using a for loop
- * 3. Compare original string and reversed string
+ * 2. Convert the string to a char array
+ * 3. Use two-pointer technique to compare characters
  * 4. Display the result
  *
  * Key Concepts Used:
- * - For Loop (iterate through string in reverse order)
- * - String Immutability
- * - String Concatenation (+)
- * - equals() method for content comparison
+ * - Character Array (char[])
+ * - Array Indexing
+ * - Two-Pointer Technique
+ * - Efficient comparison without creating extra objects
  *
- * Data Structure: String
+ * Data Structure: char[]
  *
  * @author Hemanth
- * @version 3.0
+ * @version 1.0
  */
-
-
 
                 System.out.println("======================================");
                 System.out.println("Welcome to Palindrome Checker System");
-                System.out.println("Use Case 3: Reverse String Method");
+                System.out.println("Use Case 4: Character Array Method");
                 System.out.println("======================================");
 
                 Scanner scanner = new Scanner(System.in);
@@ -42,15 +40,26 @@ public class PalindromeChecker {
                 System.out.print("Enter a word: ");
                 String word = scanner.nextLine();
 
-                // Reverse the string using for loop
-                String reversedWord = "";
+                // Convert string to character array
+                char[] characters = word.toCharArray();
 
-                for (int i = word.length() - 1; i >= 0; i--) {
-                    reversedWord = reversedWord + word.charAt(i);
+                // Two-pointer technique
+                int start = 0;
+                int end = characters.length - 1;
+
+                boolean isPalindrome = true;
+
+                while (start < end) {
+                    if (characters[start] != characters[end]) {
+                        isPalindrome = false;
+                        break;
+                    }
+                    start++;
+                    end--;
                 }
 
-                // Check if palindrome
-                if (word.equals(reversedWord)) {
+                // Display result
+                if (isPalindrome) {
                     System.out.println(word + " is a Palindrome.");
                 } else {
                     System.out.println(word + " is not a Palindrome.");
@@ -59,8 +68,6 @@ public class PalindromeChecker {
                 scanner.close();
             }
         }
-
-
 
 
 
