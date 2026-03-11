@@ -1,68 +1,108 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.LinkedList;
 
 public class PalindromeChecker {
+
+    // Node class for Singly Linked List
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
     public static void main(String[] args) {
 
         /**
          * ============================================================
-         * MAIN CLASS - UseCase7PalindromeCheckerApp
+         * MAIN CLASS - UseCase8PalindromeCheckerApp
          * ============================================================
          *
-         * Use Case 7: Deque-Based Optimized Palindrome Checker
+         * Use Case 8: Linked List Based Palindrome Checker
          *
          * Goal:
-         * Use Deque to compare front and rear elements.
+         * Check palindrome using singly linked list.
          *
          * Flow:
-         * 1. Accept a string input from the user
-         * 2. Insert characters into the deque
-         * 3. Remove first and last characters
-         * 4. Compare them until deque becomes empty
-         * 5. Display the result
+         * 1. Convert string to linked list
+         * 2. Find middle using fast and slow pointer
+         * 3. Reverse second half of the list
+         * 4. Compare first and second halves
          *
          * Key Concepts Used:
-         * - Deque (Double Ended Queue)
-         * - Front and Rear Access
-         * - Optimized Data Handling
+         * - Singly Linked List
+         * - Node Traversal
+         * - Fast and Slow Pointer Technique
+         * - In-Place Reversal
          *
-         * Data Structure: Deque
+         * Data Structure: Singly Linked List
          *
          * @author Hemanth
-         * @version 7.0
+         * @version 1.0
          */
 
         System.out.println("======================================");
         System.out.println("Welcome to Palindrome Checker System");
-        System.out.println("Use Case 7: Deque Based Method");
+        System.out.println("Use Case 8: Linked List Method");
         System.out.println("======================================");
 
         Scanner scanner = new Scanner(System.in);
 
-        // Accept input from user
+        // Accept input
         System.out.print("Enter a word: ");
         String word = scanner.nextLine();
 
-        // Create deque
-        Deque<Character> deque = new LinkedList<>();
+        // Convert string to linked list
+        Node head = null;
+        Node tail = null;
 
-        // Insert characters into deque
         for (int i = 0; i < word.length(); i++) {
-            deque.addLast(word.charAt(i));
+            Node newNode = new Node(word.charAt(i));
+
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
         }
+
+        // Find middle using fast and slow pointers
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        Node prev = null;
+        Node current = slow;
+
+        while (current != null) {
+            Node nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+
+        // Compare first half and reversed second half
+        Node firstHalf = head;
+        Node secondHalf = prev;
 
         boolean isPalindrome = true;
 
-        // Compare front and rear characters
-        while (deque.size() > 1) {
-            char first = deque.removeFirst();
-            char last = deque.removeLast();
-
-            if (first != last) {
+        while (secondHalf != null) {
+            if (firstHalf.data != secondHalf.data) {
                 isPalindrome = false;
                 break;
             }
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
         }
 
         // Display result
