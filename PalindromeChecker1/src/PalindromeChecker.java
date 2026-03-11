@@ -1,6 +1,5 @@
 import java.util.Scanner;
-import java.util.Stack;
-import java.util.Queue;
+import java.util.Deque;
 import java.util.LinkedList;
 
 public class PalindromeChecker {
@@ -8,36 +7,35 @@ public class PalindromeChecker {
 
         /**
          * ============================================================
-         * MAIN CLASS - UseCase6PalindromeCheckerApp
+         * MAIN CLASS - UseCase7PalindromeCheckerApp
          * ============================================================
          *
-         * Use Case 6: Queue + Stack Based Palindrome Check
+         * Use Case 7: Deque-Based Optimized Palindrome Checker
          *
          * Goal:
-         * Demonstrate FIFO vs LIFO using Queue and Stack.
+         * Use Deque to compare front and rear elements.
          *
          * Flow:
          * 1. Accept a string input from the user
-         * 2. Enqueue characters into the queue
-         * 3. Push characters into the stack
-         * 4. Compare dequeue (queue) and pop (stack) characters
+         * 2. Insert characters into the deque
+         * 3. Remove first and last characters
+         * 4. Compare them until deque becomes empty
          * 5. Display the result
          *
          * Key Concepts Used:
-         * - Queue (FIFO data structure)
-         * - Enqueue & Dequeue Operations
-         * - Stack vs Queue behavior (LIFO vs FIFO)
-         * - Logical comparison of characters
+         * - Deque (Double Ended Queue)
+         * - Front and Rear Access
+         * - Optimized Data Handling
          *
-         * Data Structures: Queue, Stack
+         * Data Structure: Deque
          *
          * @author Hemanth
-         * @version 1.0
+         * @version 7.0
          */
 
         System.out.println("======================================");
         System.out.println("Welcome to Palindrome Checker System");
-        System.out.println("Use Case 6: Queue + Stack Method");
+        System.out.println("Use Case 7: Deque Based Method");
         System.out.println("======================================");
 
         Scanner scanner = new Scanner(System.in);
@@ -46,22 +44,22 @@ public class PalindromeChecker {
         System.out.print("Enter a word: ");
         String word = scanner.nextLine();
 
-        // Create Stack and Queue
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
+        // Create deque
+        Deque<Character> deque = new LinkedList<>();
 
-        // Insert characters into both structures
+        // Insert characters into deque
         for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            stack.push(ch);     // LIFO
-            queue.add(ch);      // FIFO
+            deque.addLast(word.charAt(i));
         }
 
         boolean isPalindrome = true;
 
-        // Compare dequeue and pop
-        while (!queue.isEmpty()) {
-            if (queue.remove() != stack.pop()) {
+        // Compare front and rear characters
+        while (deque.size() > 1) {
+            char first = deque.removeFirst();
+            char last = deque.removeLast();
+
+            if (first != last) {
                 isPalindrome = false;
                 break;
             }
