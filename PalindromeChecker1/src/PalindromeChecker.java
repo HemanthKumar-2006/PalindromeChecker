@@ -2,50 +2,55 @@ import java.util.Scanner;
 
 public class PalindromeChecker {
 
-    // Node class for Singly Linked List
-    static class Node {
-        char data;
-        Node next;
+    /**
+     * ============================================================
+     * MAIN CLASS - UseCase9PalindromeCheckerApp
+     * ============================================================
+     *
+     * Use Case 9: Recursive Palindrome Checker
+     *
+     * Goal:
+     * Check palindrome using recursion.
+     *
+     * Flow:
+     * 1. Accept a string input from the user
+     * 2. Use recursive function to compare start and end characters
+     * 3. Stop recursion when base condition is reached
+     * 4. Display the result
+     *
+     * Key Concepts Used:
+     * - Recursion
+     * - Base Condition
+     * - Call Stack
+     *
+     * Data Structure: Call Stack
+     *
+     * @author Hemanth
+     * @version 9.0
+     */
 
-        Node(char data) {
-            this.data = data;
-            this.next = null;
+    // Recursive method to check palindrome
+    public static boolean isPalindrome(String word, int start, int end) {
+
+        // Base condition
+        if (start >= end) {
+            return true;
         }
+
+        // Check characters
+        if (word.charAt(start) != word.charAt(end)) {
+            return false;
+        }
+
+        // Recursive call
+        return isPalindrome(word, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
 
-        /**
-         * ============================================================
-         * MAIN CLASS - UseCase8PalindromeCheckerApp
-         * ============================================================
-         *
-         * Use Case 8: Linked List Based Palindrome Checker
-         *
-         * Goal:
-         * Check palindrome using singly linked list.
-         *
-         * Flow:
-         * 1. Convert string to linked list
-         * 2. Find middle using fast and slow pointer
-         * 3. Reverse second half of the list
-         * 4. Compare first and second halves
-         *
-         * Key Concepts Used:
-         * - Singly Linked List
-         * - Node Traversal
-         * - Fast and Slow Pointer Technique
-         * - In-Place Reversal
-         *
-         * Data Structure: Singly Linked List
-         *
-         * @author Hemanth
-         * @version 1.0
-         */
-
         System.out.println("======================================");
         System.out.println("Welcome to Palindrome Checker System");
-        System.out.println("Use Case 8: Linked List Method");
+        System.out.println("Use Case 9: Recursive Method");
         System.out.println("======================================");
 
         Scanner scanner = new Scanner(System.in);
@@ -54,59 +59,10 @@ public class PalindromeChecker {
         System.out.print("Enter a word: ");
         String word = scanner.nextLine();
 
-        // Convert string to linked list
-        Node head = null;
-        Node tail = null;
-
-        for (int i = 0; i < word.length(); i++) {
-            Node newNode = new Node(word.charAt(i));
-
-            if (head == null) {
-                head = newNode;
-                tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-
-        // Find middle using fast and slow pointers
-        Node slow = head;
-        Node fast = head;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        // Reverse second half
-        Node prev = null;
-        Node current = slow;
-
-        while (current != null) {
-            Node nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
-        }
-
-        // Compare first half and reversed second half
-        Node firstHalf = head;
-        Node secondHalf = prev;
-
-        boolean isPalindrome = true;
-
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data) {
-                isPalindrome = false;
-                break;
-            }
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
+        boolean result = isPalindrome(word, 0, word.length() - 1);
 
         // Display result
-        if (isPalindrome) {
+        if (result) {
             System.out.println(word + " is a Palindrome.");
         } else {
             System.out.println(word + " is not a Palindrome.");
