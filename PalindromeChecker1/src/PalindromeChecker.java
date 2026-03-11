@@ -1,71 +1,61 @@
 import java.util.Scanner;
 
 public class PalindromeChecker {
-
-    /**
-     * ============================================================
-     * MAIN CLASS - UseCase9PalindromeCheckerApp
-     * ============================================================
-     *
-     * Use Case 9: Recursive Palindrome Checker
-     *
-     * Goal:
-     * Check palindrome using recursion.
-     *
-     * Flow:
-     * 1. Accept a string input from the user
-     * 2. Use recursive function to compare start and end characters
-     * 3. Stop recursion when base condition is reached
-     * 4. Display the result
-     *
-     * Key Concepts Used:
-     * - Recursion
-     * - Base Condition
-     * - Call Stack
-     *
-     * Data Structure: Call Stack
-     *
-     * @author Hemanth
-     * @version 9.0
-     */
-
-    // Recursive method to check palindrome
-    public static boolean isPalindrome(String word, int start, int end) {
-
-        // Base condition
-        if (start >= end) {
-            return true;
-        }
-
-        // Check characters
-        if (word.charAt(start) != word.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call
-        return isPalindrome(word, start + 1, end - 1);
-    }
-
     public static void main(String[] args) {
+
+        /**
+         * ============================================================
+         * MAIN CLASS - UseCase10PalindromeCheckerApp
+         * ============================================================
+         *
+         * Use Case 10: Case-Insensitive & Space-Ignored Palindrome
+         *
+         * Goal:
+         * Ignore spaces and case while checking whether a string
+         * is a palindrome.
+         *
+         * Flow:
+         * 1. Accept a string input from the user
+         * 2. Normalize the string (remove spaces and convert to lowercase)
+         * 3. Reverse the processed string
+         * 4. Compare original processed string and reversed string
+         * 5. Display the result
+         *
+         * Key Concepts Used:
+         * - String preprocessing
+         * - Regular expressions
+         *
+         * Data Structure: String / Array
+         *
+         * @author Hemanth
+         * @version 1.0
+         */
 
         System.out.println("======================================");
         System.out.println("Welcome to Palindrome Checker System");
-        System.out.println("Use Case 9: Recursive Method");
+        System.out.println("Use Case 10: Case-Insensitive Method");
         System.out.println("======================================");
 
         Scanner scanner = new Scanner(System.in);
 
         // Accept input
-        System.out.print("Enter a word: ");
-        String word = scanner.nextLine();
+        System.out.print("Enter a sentence: ");
+        String input = scanner.nextLine();
 
-        boolean result = isPalindrome(word, 0, word.length() - 1);
+        // Normalize string: remove spaces and convert to lowercase
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
 
-        // Display result
-        if (result) {
-            System.out.println(word + " is a Palindrome.");
+        // Reverse the normalized string
+        String reversed = "";
+        for (int i = normalized.length() - 1; i >= 0; i--) {
+            reversed += normalized.charAt(i);
+        }
+
+        // Check palindrome
+        if (normalized.equals(reversed)) {
+            System.out.println("\"" + input + "\" is a Palindrome (ignoring spaces and case).");
         } else {
-            System.out.println(word + " is not a Palindrome.");
+            System.out.println("\"" + input + "\" is not a Palindrome.");
         }
 
         scanner.close();
